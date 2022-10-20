@@ -1,15 +1,14 @@
 require "byebug"
 class UsersController < ApplicationController
     def index
-        # @users = User.all
-        # render json: users
+        @users = User.all
+        render json: @users
 
-        render plain: "I'm in the index action!"
     end
 
     def create
         # debugger
-        user = User.new(params.require(:user).permit(:name, :email))
+        user = User.new(params.require(:user).permit(:username))
         # replace the `user_attributes_here` with the actual attribute keys
         user.save!
         render json: user
@@ -19,5 +18,10 @@ class UsersController < ApplicationController
         render json: params
     end
 
+    def destroy
+        user = User.find_by(params[:id])
+        user.destroy
+        redirect_to users_url
+    end
 
 end
