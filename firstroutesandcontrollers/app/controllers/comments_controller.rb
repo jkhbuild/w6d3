@@ -2,15 +2,21 @@ require "byebug"
 
 class CommentsController < ApplicationController
     def index
-        # debugger
-        if !comments[:user_id].nil?
-            user = User.find_by(params[:user_id])
-            user.comments
-        elsif !comments[:artwork_id].nil?
-            artwork = Artwork.find_by()
+        # # debugger
+        # if !comments[:user_id].nil?
+        #     user = User.find_by(params[:user_id])
+        #     user.comments
+        # elsif !comments[:artwork_id].nil?
+        #     artwork = Artwork.find_by()
 
-        comments = Comment.all
-        render json: comments
+        # comments = Comment.all
+
+        if params.has_key?(:user_id)
+            comments = Comment.where(user_id: params[:user_id])
+        elsif params.has_key?(:artwork_id)
+            comments = Comment.where(artwork_id: params[:artwork_id])
+        end
+            render json: comments
     end
 
     def create

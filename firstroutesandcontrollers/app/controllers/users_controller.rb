@@ -1,8 +1,12 @@
 require "byebug"
 class UsersController < ApplicationController
     def index
-        debugger
-        @users = User.all
+        # debugger
+        if params[:query]
+            @users = User.where(username: params[:query])
+        else
+            @users = User.all
+        end
         render json: @users
 
     end
