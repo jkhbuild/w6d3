@@ -1,6 +1,7 @@
 require "byebug"
 class UsersController < ApplicationController
     def index
+        debugger
         @users = User.all
         render json: @users
 
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
     def destroy
         user = User.find(params[:id])
         user.destroy
-        redirect_to users_url
+        render json: user
     end
 
     def update
